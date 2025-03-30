@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use dynamic port for Render
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public"))); 
@@ -16,7 +16,6 @@ let tasks = []; // Array to store tasks
 // Home route - Display tasks
 app.get("/", (req, res) => {
     res.render("index", { tasks });
-    
 });
 
 // Add a new task
@@ -35,6 +34,7 @@ app.post("/delete", (req, res) => {
     res.redirect("/");
 });
 
-app.listen(port,'127.0.0.1' ,() => {
-    console.log(`Server running at http://localhost:${port}`);
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
